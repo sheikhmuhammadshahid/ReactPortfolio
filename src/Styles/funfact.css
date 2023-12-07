@@ -1,0 +1,9 @@
+.funfact-container{
+    background-image: url('../assets/img/bg_banner.jpg');
+    background-size: cover;
+}
+
+.homeImage{
+    background-image: url('../assets/img/bg_image_1.jpg');
+    background-size: cover;
+}
