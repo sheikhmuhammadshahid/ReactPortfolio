@@ -8,10 +8,30 @@ import miyarGhar from '../assets/img/work/miyarGhar.png';
 import react_portfolio from '../assets/img/work/react_portfolio.png';
 import work_6 from '../assets/img/work/work-6.png';
 import work_5 from '../assets/img/work/work-5.jpg';
+import work_7 from '../assets/img/work/work-7.jpg';
+import work_8 from '../assets/img/work/work-8.jpg';
+import work_9 from '../assets/img/work/work-9.jpg';
 
 
 export default function PortfolioScreen() {
     const [myProjects, setmyProjects] = useState([
+        {
+            'name': 'Fatafat delivery',
+            'description': 'Food delivery app',
+            'imageUrl': work_7, 'playstore_link': 'https://play.google.com/store/apps/details?id=com.fatafat.user',
+            'type': 'apps', 'Goto': 1
+        },
+        {
+            'name': 'Fatafat Rider',
+            'description': "Fatafat hero's app for helping them to deliver orders.",
+            'imageUrl': work_8, 'playstore_link': 'https://play.google.com/store/apps/details?id=com.fatafat.delivery',
+            'type': 'apps', 'Goto': 1
+        }, {
+            'name': 'Fatafat Restaurant',
+            'description': "Fatafat restaurant app.",
+            'imageUrl': work_9, 'playstore_link': 'https://play.google.com/store/apps/details?id=com.fatafat.restaurant',
+            'type': 'apps', 'Goto': 1
+        },
         {
             'name': 'MEEGO',
             'description': 'Set your appointments anytime',

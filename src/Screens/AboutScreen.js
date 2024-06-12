@@ -1,9 +1,39 @@
-import React from 'react'
+import {React,useEffect,useState} from 'react'
 import person from '../assets/img/person.jpg';
 export default function AboutScreen() {
+    const [age, setAge] = useState(null);
+    const [experience, setExperience] = useState(null);
+    
+    useEffect(() => {
+        const calculateAge = () => {
+        const birthDate = new Date('2001-03-04'); // Replace '2001-01-01' with the actual birthdate
+        const currentDate = new Date();
+        const diffInMilliseconds = currentDate - birthDate;
+        
+        const ageDate = new Date(diffInMilliseconds);
+       
+        const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+         setAge(calculatedAge);
+        };
+        const calculateExp=()=>{
+            const currentDate = new Date();
+            const startDate = new Date('2021-08-01'); 
+            const expdiffInMilliseconds = currentDate - startDate;
+            const expInMilliseconds = new Date(expdiffInMilliseconds);
+            const years = expInMilliseconds.getUTCFullYear() - 1970;
+            const months = expInMilliseconds.getUTCMonth();
+            const totalExperience = years + months / 12;
+            
+            setExperience(totalExperience.toFixed(1));
+       
+        
+        };
+        calculateExp();
+        calculateAge();
+    }, []);
     return (
         <div className="vg-page page-about" id="about">
-            <div className="container py-5">
+            <div className="container">
                 <div className="row">
                 <div className="col-lg-4 py-3 my-2">
                         <div  className="img-place wow fadeInUp ">
@@ -12,15 +42,16 @@ export default function AboutScreen() {
                     </div>
                     <div className="col-lg-6 offset-lg-1 wow fadeInRight">
                         <h1 className="fw-light">Muhammad Shahid</h1>
-                        <h5 className="fg-theme mb-3">Flutter , React JS & Native Developer</h5>
-                        <p className="text-muted">I am an experienced developer proficient in Flutter, React JS, and native development, with a strong background in backend technologies such as Node.js, .NET Core, and ServerPod. I excel in creating cross-platform applications that seamlessly blend aesthetics and functionality. As a lifelong learner, I stay updated on technological trends to architect dynamic and future-proof systems. Collaborative by nature, I thrive in team environments, contributing my skills to drive projects from concept to realization.</p>
+                        <h5 className="fg-theme mb-3">Flutter, React JS & Native Developer</h5>
+                        <p className="text-muted">I am an experienced developer proficient in Flutter, React JS, and native development, with a strong background in backend technologies such as Node.js, .NET Core, PHP Laravel and ServerPod. I excel in creating cross-platform applications that seamlessly blend aesthetics and functionality. As a lifelong learner, I stay updated on technological trends to architect dynamic and future-proof systems. Collaborative by nature, I thrive in team environments, contributing my skills to drive projects from concept to realization.</p>
                         <ul className="theme-list">
                             <li><b>From:</b> Muzaffargarh, PK</li>
                             <li><b>Lives In:</b> Rawalpindi, PK</li>
-                            <li><b>Age:</b> 22</li>
+                            <li><b>Age:</b> {age}</li>
                             <li><b>Gender:</b> Male</li>
+                            <li><b>Experience:</b> {experience} years</li>
                         </ul>
-                        <a href='https://shahid.yourcrafty.net/Images/Muhammad%20Shahid.pdf' target="_blank" className="btn btn-theme-outline">Download CV</a>
+                        <a href='https://shahid.alfbakers.com/Images/Muhammad%20Shahid.pdf' target="_blank" className="btn btn-theme-outline">Download CV</a>
                     </div>
                     
                 </div>

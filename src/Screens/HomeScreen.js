@@ -45,8 +45,8 @@ export default function HomeScreen() {
             <div className="caption-header text-center wow zoomInDown">
                 <h5 className="fw-normal">Welcome</h5>
                 <h1 className="fw-light mb-4">I'm <b className="fg-theme">Muhammad</b> Shahid</h1>
-                <div className="badge">Flutter, Next Js and React ( Native & Js ) </div>
-                <div className="badge my-3">Developer</div>
+                <div className="badge">Full Stack Developer</div>
+
             </div>
             {/* <div className="floating-button"><span className="ti-mouse"></span></div> */}
             {/* <SocialLinks/> */}
