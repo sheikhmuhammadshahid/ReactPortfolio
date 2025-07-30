@@ -102,10 +102,22 @@ const Hero: React.FC = () => {
               variants={itemVariants}
               className="grid grid-cols-3 gap-8 text-center lg:text-left"
             >
-              <div>
-                <div className="text-2xl font-bold text-gray-900">5+</div>
-                <div className="text-gray-600 text-sm">Years Experience</div>
+            <div>
+              <div className="text-2xl font-bold text-gray-900">
+                {(() => {
+                  const start = new Date(2022, 4, 1); // May 1, 2022 (month is 0-based)
+                  const now = new Date();
+
+                  const diffInMs = now.getTime() - start.getTime();
+                  const diffInYears = diffInMs / (1000 * 60 * 60 * 24 * 365.25);
+
+                  // Round to 1 decimal, remove ".0" if it's a whole number
+                  return diffInYears.toFixed(1).replace(/\.0$/, '');
+                })()}
               </div>
+              <div className="text-gray-600 text-sm">Years Experience</div>
+            </div>
+
               <div>
                 <div className="text-2xl font-bold text-gray-900">50+</div>
                 <div className="text-gray-600 text-sm">Projects Completed</div>
