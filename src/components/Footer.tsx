@@ -5,9 +5,9 @@ import {
   Phone, 
   MapPin, 
   Linkedin, 
-  // Twitter, 
+
   Github, 
-  // Dribbble, 
+
   Send,
   Heart,
   ExternalLink,
@@ -41,9 +41,9 @@ const Footer: React.FC = () => {
 
   const socialLinks = [
     { icon: Linkedin, href: 'https://www.linkedin.com/in/m-shahid-3051sk/', label: 'LinkedIn' },
-    // { icon: Twitter, href: '#', label: 'Twitter' },
+    
     { icon: Github, href: 'https://github.com/sheikhmuhammadshahid', label: 'GitHub' },
-    // { icon: Dribbble, href: '#', label: 'Dribbble' }
+   
   ]
 
   const quickLinks = [
