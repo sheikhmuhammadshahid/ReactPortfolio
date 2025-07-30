@@ -1,43 +1,164 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 import { 
   Mail, 
   Phone, 
   MapPin, 
   Linkedin, 
-
   Github, 
-
   Send,
   Heart,
   ExternalLink,
   Code,
   Zap,
-  X
+  X,
+  CheckCircle,
+  AlertCircle,
+  Loader2
 } from 'lucide-react'
 
 const Footer: React.FC = () => {
+  const ref = useRef(null);
+  
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  })
+    name: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: ""
+  });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | 'fallback' | null>(null);
   const [showDevIndicator, setShowDevIndicator] = useState(true)
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // EmailJS configuration from environment variables
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      
+      console.log('🔧 EmailJS Configuration:', {
+        serviceId: serviceId || 'Missing',
+        templateId: templateId || 'Missing', 
+        publicKey: publicKey ? 'Present' : 'Missing',
+        emailjsLibrary: !!emailjs
+      });
+      
+      // Check if EmailJS is properly configured
+      if (serviceId && templateId && publicKey && emailjs) {
+        console.log('📧 Sending email via EmailJS...');
+        
+        // Initialize EmailJS
+        emailjs.init(publicKey);
+        
+        // Template parameters for EmailJS
+        // IMPORTANT: to_email ensures email goes to company, reply_to allows company to respond to customer
+        const templateParams = {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone || 'Not provided',
+          service_interest: formData.service || 'General inquiry',
+          message: formData.message,
+          reply_to: formData.email,
+          to_email: 'sheikhmuhammadshahid123@gmail.com', // Ensure email goes to you
+          timestamp: new Date().toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short'
+          })
+        };
+
+        console.log('📋 Template parameters:', templateParams);
+        console.log('🎯 Email will be sent TO:', templateParams.to_email);
+        console.log('🔄 Customer can be reached at:', templateParams.reply_to);
+
+        // Send email via EmailJS
+        const result = await emailjs.send(serviceId, templateId, templateParams);
+        console.log('✅ EmailJS Success:', result);
+        
+        setSubmitStatus("success");
+        
+      } else {
+        console.warn('⚠️ EmailJS not configured, using mailto fallback');
+        console.log('Missing configuration:', {
+          serviceId: !serviceId ? 'Missing VITE_EMAILJS_SERVICE_ID' : 'OK',
+          templateId: !templateId ? 'Missing VITE_EMAILJS_TEMPLATE_ID' : 'OK',
+          publicKey: !publicKey ? 'Missing VITE_EMAILJS_PUBLIC_KEY' : 'OK',
+          emailjsLibrary: !emailjs ? 'EmailJS library not loaded' : 'OK'
+        });
+        
+        // Simple mailto fallback (only used when EmailJS is not configured)
+        const subject = `New Contact: ${formData.name} - ${formData.service || 'General Inquiry'}`;
+        const emailBody = `Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
+Service: ${formData.service || 'General inquiry'}
+
+Message:
+${formData.message}
+
+Submitted: ${new Date().toLocaleString()}`;
+        
+        const mailtoLink = `mailto:sheikhmuhammadshahid123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+        
+        window.open(mailtoLink, '_blank');
+        setSubmitStatus("fallback");
+      }
+      
+      // Clear form on success
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: ""
+      });
+      
+    } catch (error) {
+      console.error('❌ EmailJS Error:', error);
+      
+      if (error && typeof error === 'object' && 'text' in error) {
+        console.error('Error details:', error.text);
+      }
+      
+      setSubmitStatus("error");
+      
+      // Emergency fallback - simple mailto
+      const subject = `URGENT: Contact Form Error - ${formData.name}`;
+      const emailBody = `EmailJS failed to send this message:
+
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
+Service: ${formData.service || 'General inquiry'}
+Message: ${formData.message}`;
+      
+      const mailtoLink = `mailto:sheikhmuhammadshahid123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+      window.open(mailtoLink, '_blank');
+      
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 8000);
+    }
+  };
 
   const socialLinks = [
     { icon: Linkedin, href: 'https://www.linkedin.com/in/m-shahid-3051sk/', label: 'LinkedIn' },
@@ -262,8 +383,34 @@ const Footer: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              ref={ref}
             >
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Status Messages */}
+                {submitStatus && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className={`p-4 rounded-lg flex items-center space-x-2 ${
+                      submitStatus === 'success' 
+                        ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                        : submitStatus === 'fallback'
+                        ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400'
+                        : 'bg-red-500/20 border border-red-500/30 text-red-400'
+                    }`}
+                  >
+                    {submitStatus === 'success' && <CheckCircle className="w-5 h-5" />}
+                    {submitStatus === 'fallback' && <ExternalLink className="w-5 h-5" />}
+                    {submitStatus === 'error' && <AlertCircle className="w-5 h-5" />}
+                    <span className="text-sm">
+                      {submitStatus === 'success' && 'Message sent successfully! I\'ll get back to you soon.'}
+                      {submitStatus === 'fallback' && 'Opening your email client to send the message.'}
+                      {submitStatus === 'error' && 'There was an issue sending your message. Please try again or use the email client.'}
+                    </span>
+                  </motion.div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -276,7 +423,8 @@ const Footer: React.FC = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300"
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="Your name"
                     />
                   </div>
@@ -291,26 +439,51 @@ const Footer: React.FC = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300"
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="your@email.com"
                     />
                   </div>
                 </div>
                 
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                    Subject *
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300"
-                    placeholder="What's this about?"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      placeholder="+1 (555) 123-4567"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="service" className="block text-sm font-medium mb-2">
+                      Service Interest
+                    </label>
+                    <select
+                      id="service"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <option value="">Select a service</option>
+                      <option value="Mobile Apps">Mobile Apps</option>
+                      <option value="Web Development">Web Development</option>
+                      <option value="Backend Development">Backend Development</option>
+                      <option value="Flutter Development">Flutter Development</option>
+                      <option value="React Native">React Native</option>
+                      <option value="ASP.NET">ASP.NET</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
                 </div>
                 
                 <div>
@@ -323,20 +496,31 @@ const Footer: React.FC = () => {
                     value={formData.message}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                     rows={5}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300 resize-none"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all duration-300 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Tell me about your project..."
                   />
                 </div>
                 
                 <motion.button
                   type="submit"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
+                  className="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  Send Message
-                  <Send className="w-4 h-4" />
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="w-4 h-4" />
+                    </>
+                  )}
                 </motion.button>
               </form>
             </motion.div>
