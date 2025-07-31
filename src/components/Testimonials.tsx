@@ -238,6 +238,7 @@ const Testimonials: React.FC = () => {
             Let's discuss your project and create something amazing together
           </p>
           <motion.button
+          id='start-project-button'
              onClick={() => {
                     const contactSection = document.getElementById('contact');
                     if (contactSection) {

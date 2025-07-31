@@ -100,7 +100,7 @@ const Services: React.FC = () => {
                 ))}
               </div>
 
-              <div className="mt-6 pt-6 border-t border-gray-100">
+              {/* <div className="mt-6 pt-6 border-t border-gray-100">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -108,7 +108,7 @@ const Services: React.FC = () => {
                 >
                   Learn More →
                 </motion.button>
-              </div>
+              </div> */}
             </motion.div>
           ))}
         </motion.div>

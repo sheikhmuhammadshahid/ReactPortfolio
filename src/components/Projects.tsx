@@ -228,9 +228,9 @@ const Projects: React.FC = () => {
                   <div className="mb-4">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-xl font-bold text-gray-900">{project.title}</h3>
-                      <span className="text-xs text-primary-600 font-medium bg-primary-100 px-2 py-1 rounded">
+                        <span className="text-xs text-primary-600 font-medium bg-primary-100 px-2 py-1 rounded text-center">
                         {project.category}
-                      </span>
+                        </span>
                     </div>
                     <p className="text-gray-600 text-sm leading-relaxed">{project.description}</p>
                   </div>
