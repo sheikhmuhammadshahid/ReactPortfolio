@@ -109,14 +109,36 @@ const Header: React.FC = () => {
                   opacity: isMenuOpen ? 1 : 0,
                 }}
                 transition={{ delay: index * 0.1 }}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(false);
+                  const sectionId = item.href.substring(1); // Remove the # character
+                  const section = document.getElementById(sectionId);
+                  if (section) {
+                    setTimeout(() => {
+                      section.scrollIntoView({ behavior: 'smooth' });
+                    }, 100); // Small delay to ensure menu closes first
+                  }
+                }}
                 className="block px-6 py-3 text-gray-700 hover:text-primary-600 hover:bg-gray-50 transition-colors"
               >
                 {item.name}
               </motion.a>
             ))}
             <div className="px-6 py-3">
-              <button className="w-full btn-primary">Let's Talk</button>
+              <button 
+                onClick={(e) => {
+                e.preventDefault();
+                setIsMenuOpen(false);
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                      setTimeout(() => {
+                      contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 100); 
+                    }
+              
+                }} 
+                className="w-full btn-primary">Let's Talk</button>
             </div>
           </nav>
         </motion.div>
