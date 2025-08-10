@@ -1,7 +1,19 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, Github, Eye } from 'lucide-react'
-
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Github, Eye } from 'lucide-react';
+import flutterPortfolio from '../assets/flutter_portfolio.png';
+import fatafat from '../assets/fatafat.jpg';
+import cowrie from '../assets/cowrie.jpg';
+import sastiKhareedari from '../assets/sastikhareedari.jpg';
+import meego from '../assets/meego.jpg';
+import biitSocial from '../assets/biit_social.jpg';
+import osaAuction from '../assets/osa_auction.png'; 
+import miyar from '../assets/miyar.jpg'; 
+import miyarSeller from '../assets/miyar_seller.jpg';
+import miyarDelivery from '../assets/miyar_delivery.png';
+import miyarGhar from '../assets/miyarGhar.png';
+import multivender from '../assets/multi_vender.jpg';
+import myTsw from '../assets/mytsw.jpg';
 const Projects: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('All')
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
@@ -10,13 +22,13 @@ const Projects: React.FC = () => {
 
   const projects = [
     {
-      id: 1,
-      title: 'E-commerce Mobile App',
+      id: 10,
+      title: 'Multi Vendor E-commerce',
       category: 'Mobile App',
-      description: 'Full-featured e-commerce mobile application built with Flutter, featuring real-time inventory and secure payments.',
-      image: '🛒',
-      tags: ['Flutter', 'Dart', 'Firebase', 'Stripe API'],
-      metrics: ['Cross-platform deployment', 'Real-time sync', '5-star user experience'],
+      description: 'A multi-vendor marketplace app where users can explore and purchase products from multiple sellers, as well as submit bulk purchase requests to get the best deals directly from vendors.',
+      image: multivender,
+      tags: ['Flutter', 'Dart', 'Supabase', 'Stripe API'],
+      metrics: ['User-friendly interface', 'Secure payments', 'Real-time notifications'],
       links: {
         live: '#',
         github: '#',
@@ -24,13 +36,42 @@ const Projects: React.FC = () => {
       }
     },
     {
+      id: 1,
+      title: 'Cowrie, a modern savings app',
+      category: 'Mobile App',
+      description: 'I developed Cowrie, a modern savings app inspired by traditional African savings circles. The app enables users to create or join a Circle, set a shared financial goal, and contribute together with trusted members. It’s designed to make community-based saving simple, transparent, and secure — without relying on banks, interest, or credit scores.',
+      image: cowrie,
+      tags: ['Flutter', 'Dart', 'Supabase', 'Stripe API'],
+      metrics: ['Stripe', 'Push Notifications'],
+      links: {
+        live: '#',
+        github: '#',
+        case: '#'
+      }
+    },
+    {
+      id: 11,
+      title: 'MyTsw',
+      category: 'Mobile App',
+      description: 'A healthcare consultation app where users can describe their health concerns, connect with doctors, and receive professional advice anytime, anywhere.',
+      image: myTsw,
+      tags: ['Flutter', 'Dart', 'Supabase', ],
+      metrics: ['Stripe', 'Push Notifications'],
+      links: {
+        live: '#',
+        github: '#',
+        case: '#'
+      }
+    },
+    
+    {
       id: 2,
-      title: 'Task Management Web App',
-      category: 'Web Development',
-      description: 'Modern task management web application built with Next.js and ASP.NET backend with real-time collaboration.',
-      image: '�',
-      tags: ['Next.js', 'ASP.NET', 'SignalR', 'PostgreSQL'],
-      metrics: ['Real-time updates', 'Team collaboration', 'Advanced analytics'],
+      title: 'Fatafat Delivery',
+      category: 'Full Stack',
+      description: "Fatafat Delivery makes getting your favorite food as quick and easy as a tap! 🍔🍕 Order from restaurants near you, and let our smart system calculate delivery charges based on your exact driving distance — so you only pay what’s fair.",
+      image: fatafat,
+      tags: ['Flutter', 'Dart', 'Laravel', 'MySQL'],
+      metrics: ['Real-time tracking', 'User-friendly interface', 'Secure payment gateway'],
       links: {
         live: '#',
         github: '#',
@@ -39,12 +80,12 @@ const Projects: React.FC = () => {
     },
     {
       id: 3,
-      title: 'Fitness Tracker App',
+      title: 'Sasti Khareedari',
       category: 'Mobile App',
-      description: 'Cross-platform fitness tracking app with React Native, featuring workout plans and progress analytics.',
-      image: '💪',
-      tags: ['React Native', 'Node.js', 'MongoDB', 'Health APIs'],
-      metrics: ['10K+ active users', 'Health kit integration', '4.8 App Store rating'],
+      description: 'I developed a complete ecommerce mobile app – Sasti Khareedari – with a powerful Laravel backend and a modern, user-friendly interface. The app allows users to browse products, add them to the cart, place orders, and track deliveries in real time. Location-based delivery fee calculation ensures fair pricing for customers.',
+      image: sastiKhareedari,
+      tags: ['Flutter', 'Php', 'MySql', 'Laravel'],
+      metrics: ['Real-time tracking', 'User-friendly interface', 'Secure payment gateway'],
       links: {
         live: '#',
         github: '#',
@@ -53,12 +94,40 @@ const Projects: React.FC = () => {
     },
     {
       id: 4,
-      title: 'Restaurant Management System',
-      category: 'Web Development',
-      description: 'Full-stack restaurant management system with ASP.NET backend and React frontend for order processing.',
-      image: '🍽️',
-      tags: ['ASP.NET', 'React', 'Entity Framework', 'SQL Server'],
-      metrics: ['Multi-location support', 'Real-time orders', 'Inventory management'],
+      title: 'Miyar',
+      category: 'Mobile App',
+      description: 'I developed a complete ecommerce mobile app – Miyar – with a powerful Laravel backend and a modern, user-friendly interface. The app allows users to browse products, add them to the cart, place orders, and track deliveries in real time. Location-based delivery fee calculation ensures fair pricing for customers.',
+      image: miyar,
+      tags: ['Flutter', 'Php', 'MySql', 'Laravel'],
+      metrics: ['Real-time tracking', 'User-friendly interface', 'Secure payment gateway'],
+      links: {
+        live: '#',
+        github: '#',
+        case: '#'
+      }
+    },
+     {
+      id: 4,
+      title: 'Miyar-Seller',
+      category: 'Mobile App',
+      description: 'I developed a complete ecommerce mobile app – Miyar – with a powerful Laravel backend and a modern, user-friendly interface. The app allows users to browse products, add them to the cart, place orders, and track deliveries in real time. Location-based delivery fee calculation ensures fair pricing for customers.',
+      image: miyarSeller,
+      tags: ['Flutter', 'Php', 'MySql', 'Laravel'],
+      metrics: ['Real-time tracking', 'User-friendly interface', 'Secure payment gateway'],
+      links: {
+        live: '#',
+        github: '#',
+        case: '#'
+      }
+    },
+     {
+      id: 4,
+      title: 'Miyar-Delivery Man',
+      category: 'Mobile App',
+      description: 'I developed a complete ecommerce mobile app – Miyar – with a powerful Laravel backend and a modern, user-friendly interface. The app allows users to browse products, add them to the cart, place orders, and track deliveries in real time. Location-based delivery fee calculation ensures fair pricing for customers.',
+      image: miyarDelivery,
+      tags: ['Flutter', 'Php', 'MySql', 'Laravel'],
+      metrics: ['Real-time tracking', 'User-friendly interface', 'Secure payment gateway'],
       links: {
         live: '#',
         github: '#',
@@ -67,12 +136,12 @@ const Projects: React.FC = () => {
     },
     {
       id: 5,
-      title: 'Chat Application',
+      title: 'Meego-Service Booking',
       category: 'Mobile App',
-      description: 'Real-time chat application built with Flutter and ServerPod backend for seamless communication.',
-      image: '💬',
-      tags: ['Flutter', 'ServerPod', 'WebSocket', 'Firebase'],
-      metrics: ['Real-time messaging', 'File sharing', 'Group chats'],
+      description: 'MEEGO is your go-to app for discovering and booking top-rated beauty, wellness, and personal care services — all in one place. 💆‍♀️✨ Browse exclusive deals from salons, spas, and service providers near you. View detailed service descriptions, staff profiles, ratings, and reviews before booking.',
+      image: meego,
+      tags: ['ASP.NET', 'Flutter', 'Entity Framework', 'SQL Server'],
+      metrics: ['Multi-location support', 'Real-time orders', 'Inventory management'],
       links: {
         live: '#',
         github: '#',
@@ -81,18 +150,62 @@ const Projects: React.FC = () => {
     },
     {
       id: 6,
-      title: 'Portfolio Website',
-      category: 'Web Development',
-      description: 'Modern portfolio website built with Next.js featuring responsive design and smooth animations.',
-      image: '�',
-      tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
-      metrics: ['100% Lighthouse score', 'SEO optimized', 'Mobile responsive'],
+      title: 'BIIT Social App',
+      category: 'Mobile App',
+      description: 'University Connect brings your campus community together in one smart app! 📚✨ Stay informed, engaged, and connected — whether you’re an admin, teacher, student, or parent.',
+      image: biitSocial,
+      tags: ['Flutter', 'Asp.Net', 'Websocket', 'Entity Framework', 'SQL Server'],
+      metrics: ['Real-time messaging', 'Posts', 'Excel integration'],
       links: {
         live: '#',
         github: '#',
         case: '#'
       }
-    }
+    },
+    {
+      id: 7,
+      title: 'Portfolio Website',
+      category: 'Web Development',
+      description: 'Modern portfolio website built with Flutter and Firebase.',
+      image: flutterPortfolio,
+      tags: ['Flutter', 'Firebase', 'Flutter Web'],
+      metrics: ['Responsive design', 'Fast loading', 'SEO optimized'],
+      links: {
+        live: '#',
+        github: '#',
+        case: '#'
+      }
+    },
+    {
+      id: 8,
+      title: 'OSA Auction System',
+      category: 'Web Development',
+      description: 'OSA Auction System is a powerful online auction management platform designed for seamless product listing, bidding, and sales tracking. 🎯 From live auctions to real-time bid updates, it enables admins to manage products, monitor sales, and track collected amounts effortlessly. Telephonists can assist bidders, ensuring a smooth auction experience.',
+      image: osaAuction,
+      tags: ['Flutter', 'Firebase', 'Flutter Web'],
+      metrics: ['Responsive design', 'Fast loading', 'SEO optimized'],
+      links: {
+        live: '#',
+        github: '#',
+        case: '#'
+      }
+    },
+    {
+      id: 9,
+      title: 'Miyar Ghar',
+      category: 'Web Development',
+      description: 'Miyar Ghar is a comprehensive property management platform that simplifies the process of renting and managing properties. 🏡✨ Landlords can easily list their properties, screen tenants, and manage leases, while tenants can browse listings, submit applications, and pay rent online. The platform aims to streamline communication and transactions between landlords and tenants, making property management hassle-free.',
+      image: miyarGhar,
+      tags: ['React', 'Node.js', 'MongoDB'],
+      metrics: ['User-friendly interface', 'Secure payments', 'Real-time notifications'],
+      links: {
+        live: '#',
+        github: '#',
+        case: '#'
+      }
+    },
+    
+
   ]
 
   const filteredProjects = activeFilter === 'All' 
@@ -177,8 +290,8 @@ const Projects: React.FC = () => {
               >
                 {/* Project Image/Icon */}
                 <div className="relative h-48 bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center">
-                  <span className="text-6xl">{project.image}</span>
-                  
+                  <img src={project.image} alt={project.title} className="object-cover w-full h-full" />
+
                   {/* Overlay on Hover */}
                   <AnimatePresence>
                     {hoveredProject === project.id && (
