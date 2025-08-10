@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Eye } from 'lucide-react';
+import { ExternalLink, Github, Eye, X } from 'lucide-react';
 import flutterPortfolio from '../assets/flutter_portfolio.png';
 import fatafat from '../assets/fatafat.jpg';
 import cowrie from '../assets/cowrie.jpg';
@@ -17,6 +17,7 @@ import myTsw from '../assets/mytsw.jpg';
 const Projects: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('All')
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
+  const [selectedImage, setSelectedImage] = useState<{src: string, title: string} | null>(null)
 
   const filters = ['All', 'Web Development', 'Mobile App', 'Backend', 'Full Stack']
 
@@ -290,7 +291,12 @@ const Projects: React.FC = () => {
               >
                 {/* Project Image/Icon */}
                 <div className="relative h-48 bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center">
-                  <img src={project.image} alt={project.title} className="object-cover w-full h-full" />
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="object-cover w-full h-full cursor-pointer" 
+                
+                  />
 
                   {/* Overlay on Hover */}
                   <AnimatePresence>
@@ -322,9 +328,9 @@ const Projects: React.FC = () => {
                           <Github className="w-5 h-5 text-gray-700" />
                         </motion.a>
                         <motion.a
-                          href={project.links.case}
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
+                          onClick={() => setSelectedImage({src: project.image, title: project.title})}
                           exit={{ scale: 0 }}
                           transition={{ delay: 0.3 }}
                           className="p-3 bg-white rounded-full hover:bg-gray-100 transition-colors"
@@ -412,6 +418,43 @@ const Projects: React.FC = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Image Dialog */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div 
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              className="relative max-w-4xl max-h-[90vh] min-h-[80vh] overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-lg z-10"
+                aria-label="Close dialog"
+              >
+                <X className="w-5 h-5 text-gray-700" />
+              </button>
+              <img 
+                src={selectedImage.src} 
+                alt={selectedImage.title} 
+                className="w-full h-auto min-h-[80vh] rounded-lg shadow-2xl"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-4 text-center">
+                <h3 className="text-xl font-bold">{selectedImage.title}</h3>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
