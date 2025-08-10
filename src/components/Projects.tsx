@@ -292,7 +292,8 @@ const Projects: React.FC = () => {
                 {/* Project Image/Icon */}
                 <div className="relative h-48 bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center">
                   <img 
-                    src={project.image} 
+                    src={project.image}
+                    onClick={() => setSelectedImage({src: project.image, title: project.title})}
                     alt={project.title} 
                     className="object-cover w-full h-full cursor-pointer" 
                 
