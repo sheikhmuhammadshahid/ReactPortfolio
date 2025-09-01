@@ -214,11 +214,11 @@ Message: ${formData.message}`;
             {/* Close button */}
             <motion.button
               onClick={() => setShowDevIndicator(false)}
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              className="absolute top-2 right-2 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors duration-200"
+              // whileHover={{ scale: 1.1, rotate: 90 }}
+              // whileTap={{ scale: 0.9 }}
+              className="absolute top-2 right-2 w-9 h-9 p-2 z-20 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 focus:outline-none transition-colors duration-200 cursor-pointer"
             >
-              <X className="w-3 h-3 text-white" />
+              <X className="w-5 h-5 text-white" />
             </motion.button>
 
             {/* Content */}
